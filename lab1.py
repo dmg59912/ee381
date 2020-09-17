@@ -2,19 +2,9 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import random
+import string 
 
 
-def coin2(N):
-    coin = np.random.randint(0,2,N)
-    heads = sum(coin)
-    tails = N - heads
-    #
-    p_heads = heads/N
-    p_tails = tails/N
-    print('probability of heads = ', p_heads)
-    print('probability of tails = ' , p_tails)
-
-coin2(1000)
 
 
 
@@ -95,14 +85,67 @@ def plotting2(N):
 
 
 
+# 3 Getting 50 heads when tossing 1000 coins 
+def coin(N):
+    coin = np.random.randint(0,2,N)
+    heads = sum(coin)
+    tails = N - heads
+    #
+    p_heads = heads/N
+    #p_tails = tails/N
+    half_tosses = N/2
+
+    print('probability of ', half_tosses, 'heads in tossing', N, ' fair coins = ', p_heads )
+
+
+# 4 The password hacking problem 
+def hack():
+    N = 1000
+    my_password = "rios"
+    m = 80000
+    k = 7
+    successes = 0
+    letter_words = string.ascii_lowercase
+
+    for j in range(1,N):
+        m_words = []
+
+        for i in range(m ):
+            rand_4_letter_word_result = ''.join(random.choice(letter_words) for i in range(4))
+            m_words.append(rand_4_letter_word_result)
+
+        for i in range(m):
+            if my_password == m_words[i]:
+                successes = successes + 1
+                #print('Password ', my_password,  m_words[i], ' found, at position ', i) 
+
+    print('password was found ', successes, ' times, a percent of p = ', successes/N)
+        
+    m_longer_words= []
+    for i in range(m * k):
+        rand_4_letter_word_result = ''.join(random.choice(letter_words) for i in range(4) )
+        m_longer_words.append(rand_4_letter_word_result)
+
+
+#####################################################################################################
 def main(): 
+
+    # problem 1
     p = np.array([0.10, 0.15,0.20,0.05,0.30,0.10,0.10])
     N = 100000
     #plotting(p,N)
-    plotting2(N)
+
+    # problem 2
+    #plotting2(N)
 
     #sum_7 = sum2dice()
     #print('times roll to reach 7 = ', sum_7)
+
+    # problem 3
+    coin(100)
+    coin(1000)
+
+    hack()
 
 
 if __name__ == "__main__":
