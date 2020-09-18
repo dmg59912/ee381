@@ -101,7 +101,7 @@ def coin(N):
 # 4 The password hacking problem 
 def hack():
     N = 1000
-    my_password = "rios"
+    my_password = "ares"
     m = 80000
     k = 7
     successes = 0
@@ -113,19 +113,29 @@ def hack():
         for i in range(m ):
             rand_4_letter_word_result = ''.join(random.choice(letter_words) for i in range(4))
             m_words.append(rand_4_letter_word_result)
-
-        for i in range(m):
             if my_password == m_words[i]:
                 successes = successes + 1
-                #print('Password ', my_password,  m_words[i], ' found, at position ', i) 
+                break
 
-    print('password was found ', successes, ' times, a percent of p = ', successes/N)
-        
-    m_longer_words= []
-    for i in range(m * k):
-        rand_4_letter_word_result = ''.join(random.choice(letter_words) for i in range(4) )
-        m_longer_words.append(rand_4_letter_word_result)
+    print('password was found ', successes, ' times out of ', N ,' a percent of p = ', successes/N)
+    
+    m_words_location  = 0
+    successes = 0
+    for j in range(1,N):
+        m_longer_words= []
 
+        for i in range(m * k ):
+            rand_4_letter_word_result = ''.join(random.choice(letter_words) for i in range(4))
+            m_longer_words.append(rand_4_letter_word_result)
+            if my_password == m_longer_words[i]:
+               m_words_location = m_words_location + i 
+               successes = successes + 1
+               break
+
+    average_m_words_found = round(m_words_location / successes,2)
+    probability_of_m = round(average_m_words_found / (m * k),2)
+    print('password was found ', successes, ' times out of ', N ,' a percent of p = ', successes/N)
+    print('Average of m words produce before finding password is ', average_m_words_found, ', with probablity ', probability_of_m)
 
 #####################################################################################################
 def main(): 
@@ -133,18 +143,19 @@ def main():
     # problem 1
     p = np.array([0.10, 0.15,0.20,0.05,0.30,0.10,0.10])
     N = 100000
-    #plotting(p,N)
+    plotting(p,N)
 
     # problem 2
-    #plotting2(N)
+    plotting2(N)
 
-    #sum_7 = sum2dice()
-    #print('times roll to reach 7 = ', sum_7)
+    sum_7 = sum2dice()
+    print('times roll to reach 7 = ', sum_7)
 
     # problem 3
     coin(100)
     coin(1000)
 
+    # problem 4
     hack()
 
 
