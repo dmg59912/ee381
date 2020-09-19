@@ -3,7 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import random
 import string 
-
+import multiprocessing
 
 
 
@@ -17,7 +17,6 @@ def nSidedDie(p):
     for k in range (0,n):
         if r > cp [k] and r <= cp[k + 1]:
              d = k + 1
-             #print('Ramdom number generated {:1}'.format(d))
              break
     return d
 #
@@ -43,6 +42,7 @@ def plotting(p, N):
     plt.xticks(b1)
     plt.show()
 
+################################################################################################################
 
 # 2. Number of rolls needed to get a "7" with two dice
 def sum2dice():
@@ -84,30 +84,32 @@ def plotting2(N):
     plt.show()
 
 
+#####################################################################################################
 
 # 3 Getting 50 heads when tossing 1000 coins 
 def coin(N):
-    coin = np.random.randint(0,2,N)
-    heads = sum(coin)
-    tails = N - heads
-    #
-    p_heads = heads/N
-    #p_tails = tails/N
-    half_tosses = N/2
+    success = 0
+    for i in range(0,100000):
+        coin = np.random.randint(0,2,N)
+        heads = sum(coin)
+        #
+        if heads == 50:
+            success = success + 1
+    print('number of 50 heads = ', success, ' with probability of ', success/1000000)
 
-    print('probability of ', half_tosses, 'heads in tossing', N, ' fair coins = ', p_heads )
-
+########################################################################################################
 
 # 4 The password hacking problem 
 def hack():
     N = 1000
-    my_password = "ares"
+    my_password = "guns"
     m = 80000
     k = 7
     successes = 0
     letter_words = string.ascii_lowercase
 
-    for j in range(1,N):
+    # Generating m random 4 letter words
+    for j in range(0,N):
         m_words = []
 
         for i in range(m ):
@@ -119,9 +121,11 @@ def hack():
 
     print('password was found ', successes, ' times out of ', N ,' a percent of p = ', successes/N)
     
+
+    # Generating m * k random 4 letter words 
     m_words_location  = 0
     successes = 0
-    for j in range(1,N):
+    for j in range(0,N):
         m_longer_words= []
 
         for i in range(m * k ):
@@ -137,9 +141,10 @@ def hack():
     print('password was found ', successes, ' times out of ', N ,' a percent of p = ', successes/N)
     print('Average of m words produce before finding password is ', average_m_words_found, ', with probablity ', probability_of_m)
 
+
+
 #####################################################################################################
 def main(): 
-
     # problem 1
     p = np.array([0.10, 0.15,0.20,0.05,0.30,0.10,0.10])
     N = 100000
@@ -148,16 +153,14 @@ def main():
     # problem 2
     plotting2(N)
 
-    sum_7 = sum2dice()
-    print('times roll to reach 7 = ', sum_7)
 
     # problem 3
     coin(100)
-    coin(1000)
 
     # problem 4
     hack()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
+  
