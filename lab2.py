@@ -1,0 +1,1 @@
+# use probablity p:0.6; e0 = 0.05; e1 = 0.03
