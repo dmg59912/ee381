@@ -20,6 +20,25 @@ def nSidedDie(p):
 #
 
 # 2) Conditional probability: P(R=1|S=1)
+def conditional_p(N,p0,e0,e1):
+    success = 0
+    num_of_s = 0
+    for i in range(0,N):
+        s = nSidedDie(p0) -1
+        if s==1:
+            num_of_s += 1
+            r = nSidedDie(e1) -1
+        else:
+            continue
+        
+        #will check if s = 1 and r = 1 for (S ^ R)
+        if s==r: 
+            success += 1
+    
+    #calculate conditional Pr. P(R=1|S=1) = P(S ^ R)/ P(S=1)
+    r_1_give_s1 = success/num_of_s
+
+    return r_1_give_s1
 
 
 
@@ -52,7 +71,11 @@ def main():
     q_failure = 1 - p_success
     print("P of success ", p_success)
     print("P of failure ", round(q_failure,2))
+
+
     # problem 2
+    problability = conditional_p(N,p0,e0,e1)
+    print(problability)
 
 
 if __name__ == '__main__':
