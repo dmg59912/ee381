@@ -67,9 +67,10 @@ def conditional_p2(N,p0,e0,e1):
 
 # 4) Enhance transmission method 
 def enhanced_transmission(N,p0,e0,e1):
+    success = 0
     #Generate S bit and send 3 times
     s = nSidedDie(p0) -1
-    for i in range(0, 30):
+    for i in range(0, N):
         r_bits = []
         if s == 1:
             #generate R bit 3 times 
@@ -81,10 +82,13 @@ def enhanced_transmission(N,p0,e0,e1):
                 r = nSidedDie(e0) -1
                 r_bits.append(r)
 
-        print("S = ", s)
-        print("R = ", r_bits)
+     
         majority_b = calculate_D(r_bits)
-        print("So the majority is ", majority_b)
+
+        #calcutate number of S = D
+        if majority_b == s:
+            success += 1
+    return round(success/N, 3)
 
 def calculate_D(rbits):
     count_0 = 0
@@ -139,7 +143,8 @@ def main():
     print(round(problability2,2))
 
     # problem 4
-    enhanced_transmission(N,p0,e0,e1)
+    probability3 = 1 - enhanced_transmission(N,p0,e0,e1)
+    print(round(probability3, 3))
 
 if __name__ == '__main__':
     main()
