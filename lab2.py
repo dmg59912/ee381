@@ -36,18 +36,35 @@ def conditional_p(N,p0,e0,e1):
             success += 1
     
     #calculate conditional Pr. P(R=1|S=1) = P(S ^ R)/ P(S=1)
-    r_1_give_s1 = success/num_of_s
+    r1_give_s1 = success/num_of_s
 
-    return r_1_give_s1
+    return r1_give_s1
 
+# 3) Conditional probability: P(S=1|R=1)
+def conditional_p2(N,p0,e0,e1):
+    success = 0
+    num_of_r = 0
+    for i in range(0,N):
+        r = nSidedDie(e1) -1
+        #will check if R = 1
+        if r==1:
+            num_of_r +=1
+            s = nSidedDie(p0) -1
+        else:
+            continue
+        #will check if s = 1 and r = 1 for (S ^ R)
+        if s==r: 
+            success += 1
+    
+    #calculate conditional Pr. P(R=1|S=1) = P(S ^ R)/ P(R=1)
+    s1_give_r1 = success/num_of_r
 
-
+    return s1_give_r1
 
 #####################################################################################################
 def main(): 
     # problem 1
-    #N = 100000
-    N = 100
+    N = 100000
     success = 0
     p0 = np.array([0.6, 0.4])
     e1 = np.array([0.03,0.97])
@@ -66,17 +83,19 @@ def main():
         if s == r:
             success +=1
 
-    print("success ", success)
     p_success = success/N
     q_failure = 1 - p_success
-    print("P of success ", p_success)
+    print("P of success ", round(p_success,2))
     print("P of failure ", round(q_failure,2))
 
 
     # problem 2
     problability = conditional_p(N,p0,e0,e1)
-    print(problability)
+    print(round(problability,2))
 
+    # problem 3
+    problability2 = conditional_p2(N,p0,e0,e1)
+    print(round(problability2,2))
 
 if __name__ == '__main__':
     main()
