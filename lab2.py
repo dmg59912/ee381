@@ -70,6 +70,7 @@ def enhanced_transmission(N,p0,e0,e1):
     success = 0
     #Generate S bit and send 3 times
     s = nSidedDie(p0) -1
+    count = 0
     for i in range(0, N):
         r_bits = []
         if s == 1:
@@ -81,13 +82,20 @@ def enhanced_transmission(N,p0,e0,e1):
             for i in range(0,3):
                 r = nSidedDie(e0) -1
                 r_bits.append(r)
-
-     
+       # print(r_bits)
+        #will calculate majority rule
         majority_b = calculate_D(r_bits)
-
+        
         #calcutate number of S = D
-        if majority_b == s:
+        if s == majority_b:
             success += 1
+        #else:
+           # print(count ," fail " ," S ", s, " R ", r_bits, " ", majority_b )
+
+       
+       # print("count =", count, " " ,success, ": S ", s, " R ", r_bits )
+        count +=1
+
     return round(success/N, 3)
 
 def calculate_D(rbits):
@@ -95,11 +103,12 @@ def calculate_D(rbits):
     count_1 = 0
 
     #count majority bits 
-    for i in rbits:
+    for i in range(0,3):
         if rbits[i] == 1:
             count_1 += 1
         elif rbits[i]== 0:
             count_0 += 1
+    #print("0= ", count_0,"1= ", count_1)
     if count_1 > count_0:
         return 1
     else:
@@ -130,19 +139,22 @@ def main():
 
     p_success = success/N
     q_failure = 1 - p_success
-    print("P of success ", round(p_success,2))
+    print("Problem # 1")
     print("P of failure ", round(q_failure,2))
 
 
     # problem 2
+    print("\nProblem # 2")
     problability = conditional_p(N,p0,e0,e1)
     print(round(problability,2))
 
     # problem 3
+    print("\nProblem # 3")
     problability2 = conditional_p2(N,p0,e0,e1)
     print(round(problability2,2))
 
     # problem 4
+    print("\nProblem # 4")
     probability3 = 1 - enhanced_transmission(N,p0,e0,e1)
     print(round(probability3, 3))
 
