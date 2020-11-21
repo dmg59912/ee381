@@ -122,7 +122,7 @@ def main():
 
 
     # problem 1
-    #confidence_intervals()
+    confidence_intervals()
 
     # problem 2
     trials = 10000
